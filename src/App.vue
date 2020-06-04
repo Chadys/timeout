@@ -1,57 +1,77 @@
 <template>
   <v-app>
+    <v-lazy>
+      <v-navigation-drawer v-model="drawer" app>
+        <v-list dense nav>
+          <v-list-item link to="/">
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>
+                Programs list
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item link to="/about">
+            <v-list-item-icon>
+              <v-icon>mdi-plus-box-outline</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>
+                New program
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+    </v-lazy>
+
     <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>
+        <router-link
+          tag="h1"
+          class="d-flex align-center"
+          to="/"
+          :style="{ cursor: 'pointer' }"
+        >
+          <v-img
+            alt="Timeout Logo"
+            :src="require('./assets/logo.png')"
+            class="shrink"
+            contain
+            transition="scale-transition"
+            width="50"
+          />
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+          <h1 class="display-1 font-weight-bold">
+            Timeout
+          </h1>
+        </router-link>
+      </v-toolbar-title>
     </v-app-bar>
 
     <v-content>
-      <HelloWorld />
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
     </v-content>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
 
 export default Vue.extend({
   name: "App",
 
   components: {
-    HelloWorld
+    //
   },
 
   data: () => ({
-    //
+    drawer: null
   })
 });
 </script>
