@@ -17,13 +17,9 @@
         </p>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col>
-        <v-row justify="space-around">
-          <ButtonImport />
-          <ButtonCreate />
-        </v-row>
-      </v-col>
+    <v-row justify="space-around">
+      <ButtonImport />
+      <ButtonCreate />
     </v-row>
   </v-container>
 </template>
