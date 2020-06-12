@@ -7,42 +7,42 @@ import {
 
 const { getExercisesFilteredByCategories } = getters;
 
-function createDummyExercise(
-  id: number,
-  categories: ExerciseCategories[]
-): [number, Exercise] {
-  const categoriesSet = new Set(categories);
-  return [
-    id,
-    {
-      id,
-      imgSide: "",
-      imgFront: "",
-      name: "",
-      isSymmetrical: false,
-      defaultSecondsDuration: 0,
-      defaultSecondsBreak: 0,
-      tips: "",
-      categories: categoriesSet
-    }
-  ];
-}
-
-const state: ExercisesState = {
-  exercisesMap: new Map([
-    createDummyExercise(1, [
-      ExerciseCategories.Cardio,
-      ExerciseCategories.Arms
-    ]),
-    createDummyExercise(2, [
-      ExerciseCategories.Legs,
-      ExerciseCategories.Cardio
-    ]),
-    createDummyExercise(3, [ExerciseCategories.Abdo])
-  ])
-};
-
 describe("exercisesCategoriesFilter", () => {
+  function createDummyExercise(
+    id: number,
+    categories: ExerciseCategories[]
+  ): [number, Exercise] {
+    const categoriesSet = new Set(categories);
+    return [
+      id,
+      {
+        id,
+        imgSide: "",
+        imgFront: "",
+        name: "",
+        isSymmetrical: false,
+        defaultSecondsDuration: 0,
+        defaultSecondsBreak: 0,
+        tips: "",
+        categories: categoriesSet
+      }
+    ];
+  }
+
+  const state: ExercisesState = {
+    exercisesMap: new Map([
+      createDummyExercise(1, [
+        ExerciseCategories.Cardio,
+        ExerciseCategories.Arms
+      ]),
+      createDummyExercise(2, [
+        ExerciseCategories.Legs,
+        ExerciseCategories.Cardio
+      ]),
+      createDummyExercise(3, [ExerciseCategories.Abdo])
+    ])
+  };
+
   it("filter on one category", () => {
     const result = getExercisesFilteredByCategories(state)([
       ExerciseCategories.Cardio

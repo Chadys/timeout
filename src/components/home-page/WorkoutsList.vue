@@ -1,7 +1,11 @@
 <template>
   <div>
     <v-list class="limited-width">
-      <v-list-item two-line v-for="workout in workoutsList" :key="workout.id">
+      <v-list-item
+        two-line
+        v-for="workout in workoutsMap.values()"
+        :key="workout.id"
+      >
         <v-list-item-content>
           <v-list-item-title>{{ workout.title }}</v-list-item-title>
           <v-list-item-subtitle>{{
@@ -38,6 +42,7 @@ import Component from "vue-class-component";
 import ButtonCreate from "@/components/home-page/ButtonCreate.vue";
 import ButtonImport from "@/components/home-page/ButtonImport.vue";
 import humanizeSmallDuration from "@/filters/humanizeSmallDuration";
+import { Workout } from "@/store/modules/workouts/workouts.type";
 
 @Component({
   name: "WorkoutsList",
@@ -47,14 +52,9 @@ import humanizeSmallDuration from "@/filters/humanizeSmallDuration";
   }
 })
 export default class WorkoutsList extends Vue {
-  workoutsList = [
-    { id: 1, timeInSeconds: 32, title: "WorkoutTitle1" },
-    { id: 2, timeInSeconds: 60, title: "WorkoutTitle2" },
-    { id: 3, timeInSeconds: 61, title: "WorkoutTitle3" },
-    { id: 4, timeInSeconds: 512, title: "WorkoutTitle4" },
-    { id: 5, timeInSeconds: 5555, title: "WorkoutTitle5" },
-    { id: 6, timeInSeconds: 10453, title: "WorkoutTitle6" }
-  ];
+  get workoutsMap(): Map<number, Workout> {
+    return this.$store.state.workouts.workoutsMap;
+  }
 }
 </script>
 

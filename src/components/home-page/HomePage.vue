@@ -1,6 +1,6 @@
 <template>
-  <!--  <WelcomePage />-->
-  <WorkoutsList />
+  <WorkoutsList v-if="hasWorkouts" />
+  <WelcomePage v-else />
 </template>
 
 <script lang="ts">
@@ -17,7 +17,11 @@ import WorkoutsList from "@/components/home-page/WorkoutsList.vue";
     WorkoutsList
   }
 })
-export default class HomePage extends Vue {}
+export default class HomePage extends Vue {
+  get hasWorkouts(): boolean {
+    return this.$store.state.workouts.workoutsMap.size > 0;
+  }
+}
 </script>
 
 <style scoped></style>
