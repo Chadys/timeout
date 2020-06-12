@@ -12,7 +12,6 @@ function addDurationText(durationValue: number, text: string, unit: string) {
 }
 
 export default Vue.filter("humanizeSmallDuration", function(value: number) {
-  //TODO test
   if (value <= 0) return "0 second";
   let result = "";
 
