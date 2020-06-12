@@ -8,7 +8,7 @@ import {
 export const getters = {
   getExercisesFilteredByCategories(state: ExercisesState) {
     return (categories: ExerciseCategories[]) => {
-      return state.exercisesList.filter(exercise =>
+      return [...state.exercisesMap.values()].filter(exercise =>
         categories.every(category => exercise.categories.has(category))
       );
     };
@@ -17,7 +17,7 @@ export const getters = {
 
 const moduleExercises: Module<ExercisesState, any> = {
   state: () => ({
-    exercisesList: []
+    exercisesMap: new Map([])
   }),
   getters
 };

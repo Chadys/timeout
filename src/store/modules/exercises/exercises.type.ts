@@ -19,5 +19,5 @@ export interface Exercise {
 }
 
 export interface ExercisesState {
-  exercisesList: Exercise[];
+  exercisesMap: Map<number, Exercise>; //map's keys should be object ids
 }

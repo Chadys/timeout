@@ -7,27 +7,39 @@ import {
 
 const { getExercisesFilteredByCategories } = getters;
 
-function createDummyExercise(categories: ExerciseCategories[]): Exercise {
+function createDummyExercise(
+  id: number,
+  categories: ExerciseCategories[]
+): [number, Exercise] {
   const categoriesSet = new Set(categories);
-  return {
-    id: 0,
-    imgSide: "",
-    imgFront: "",
-    name: "",
-    isSymmetrical: false,
-    defaultSecondsDuration: 0,
-    defaultSecondsBreak: 0,
-    tips: "",
-    categories: categoriesSet
-  };
+  return [
+    id,
+    {
+      id,
+      imgSide: "",
+      imgFront: "",
+      name: "",
+      isSymmetrical: false,
+      defaultSecondsDuration: 0,
+      defaultSecondsBreak: 0,
+      tips: "",
+      categories: categoriesSet
+    }
+  ];
 }
 
 const state: ExercisesState = {
-  exercisesList: [
-    createDummyExercise([ExerciseCategories.Cardio, ExerciseCategories.Arms]),
-    createDummyExercise([ExerciseCategories.Legs, ExerciseCategories.Cardio]),
-    createDummyExercise([ExerciseCategories.Abdo])
-  ]
+  exercisesMap: new Map([
+    createDummyExercise(1, [
+      ExerciseCategories.Cardio,
+      ExerciseCategories.Arms
+    ]),
+    createDummyExercise(2, [
+      ExerciseCategories.Legs,
+      ExerciseCategories.Cardio
+    ]),
+    createDummyExercise(3, [ExerciseCategories.Abdo])
+  ])
 };
 
 describe("exercisesCategoriesFilter", () => {
@@ -37,8 +49,8 @@ describe("exercisesCategoriesFilter", () => {
     ]);
 
     expect(result).toStrictEqual([
-      state.exercisesList[0],
-      state.exercisesList[1]
+      state.exercisesMap.get(1),
+      state.exercisesMap.get(2)
     ]);
   });
   it("filter on two categories", () => {
@@ -47,11 +59,11 @@ describe("exercisesCategoriesFilter", () => {
       ExerciseCategories.Legs
     ]);
 
-    expect(result).toStrictEqual([state.exercisesList[1]]);
+    expect(result).toStrictEqual([state.exercisesMap.get(2)]);
   });
   it("filter on no categories", () => {
     const result = getExercisesFilteredByCategories(state)([]);
 
-    expect(result).toStrictEqual(state.exercisesList);
+    expect(result).toStrictEqual([...state.exercisesMap.values()]);
   });
 });
