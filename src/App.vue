@@ -8,7 +8,7 @@
       temporary
     >
       <v-list dense nav>
-        <v-list-item link to="/">
+        <v-list-item link to="/" @click="toggleDrawer()">
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
@@ -18,7 +18,13 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/about">
+        <v-list-item
+          link
+          @click="
+            goToNewWorkoutEdition();
+            toggleDrawer();
+          "
+        >
           <v-list-item-icon>
             <v-icon>mdi-plus-box-outline</v-icon>
           </v-list-item-icon>
@@ -32,7 +38,7 @@
     </v-navigation-drawer>
 
     <v-app-bar app color="primary" dark>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="toggleDrawer()"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <router-link
           tag="div"
@@ -65,13 +71,17 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import Component from "vue-class-component";
+
+import LinkToNewWorkoutMixin from "@/mixins/LinkToNewWorkoutMixin";
 
 @Component({
   name: "App"
 })
-export default class App extends Vue {
+export default class App extends LinkToNewWorkoutMixin {
   drawer = false;
+  toggleDrawer(): void {
+    this.drawer = !this.drawer;
+  }
 }
 </script>

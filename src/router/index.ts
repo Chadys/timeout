@@ -11,6 +11,17 @@ const routes: Array<RouteConfig> = [
     component: HomePage
   },
   {
+    path: "/edit-workout/:workoutId(\\d+)",
+    name: "EditWorkout",
+    component: () =>
+      import(
+        /* webpackChunkName: "edit-workout" */ "@/components/edit-page/EditWorkout.vue"
+      ), //lazy loaded
+    props: ({ params }) => ({
+      workoutId: Number.parseInt(params.workoutId, 10) || 0
+    })
+  },
+  {
     path: "*",
     name: "NotFound",
     component: () =>

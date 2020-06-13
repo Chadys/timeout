@@ -1,5 +1,5 @@
 <template>
-  <v-btn v-bind="$attrs" outlined>
+  <v-btn v-bind="$attrs" outlined v-on="$listeners">
     <v-icon class="mr-2">{{ icon }}</v-icon>
     {{ text }}
   </v-btn>

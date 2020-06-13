@@ -1,5 +1,6 @@
 export enum OPERATIONS {
-  NEW_WORKOUT = "NEW_WORKOUT"
+  NEW_WORKOUT = "NEW_WORKOUT",
+  EDIT_WORKOUT_TITLE = "EDIT_WORKOUT_TITLE"
 }
 
 export interface SelectedExercise {
