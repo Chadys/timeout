@@ -29,7 +29,7 @@
         <v-col cols="4" offset="2">
           <v-text-field
             color="default"
-            class="text-h3"
+            class="title"
             placeholder="Workout Title"
             :value="workout.title"
             @input="updateTitle($event)"
@@ -39,6 +39,9 @@
       <v-row>
         <v-col cols="4">
           <ExercisesList @add-exercise="addExercise($event)" />
+        </v-col>
+        <v-col cols="4" offset="2">
+          <WorkoutProgram :workout="workout" />
         </v-col>
       </v-row>
       <v-row justify="end">
@@ -57,13 +60,20 @@ import { Prop } from "vue-property-decorator";
 
 import { OPERATIONS, Workout } from "@/store/modules/workouts/workouts.type";
 import ExercisesList from "@/components/edit-page/ExercisesList.vue";
+import WorkoutProgram from "@/components/edit-page/WorkoutProgram.vue";
 import ButtonDelete from "@/components/edit-page/ButtonDelete.vue";
 import ButtonDownload from "@/components/edit-page/ButtonDownload.vue";
 import ButtonRun from "@/components/edit-page/ButtonRun.vue";
 
 @Component({
   name: "EditWorkout",
-  components: { ButtonRun, ButtonDownload, ButtonDelete, ExercisesList }
+  components: {
+    ButtonRun,
+    ButtonDownload,
+    ButtonDelete,
+    ExercisesList,
+    WorkoutProgram
+  }
 })
 export default class WorkoutsList extends Vue {
   // TODO better mobile presentation in template

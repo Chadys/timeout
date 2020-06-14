@@ -10,9 +10,9 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
 
 import ButtonIcon from "@/components/common/ButtonIcon.vue";
-import { Prop } from "vue-property-decorator";
 import { OPERATIONS } from "@/store/modules/workouts/workouts.type";
 
 @Component({

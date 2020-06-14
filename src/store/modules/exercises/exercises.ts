@@ -23,15 +23,15 @@ const moduleExercises: Module<ExercisesState, any> = {
     exercisesMap: new Map([
       [
         1,
-        {
-          id: 1,
-          img: "001_mountain_climber",
-          name: "Mountain Climber",
-          isSymmetrical: false,
-          defaultSecondsDuration: 50,
-          defaultSecondsBreak: 10,
-          tips: "",
-          categories: new Set([
+        new Exercise(
+          1,
+          "001_mountain_climber",
+          "Mountain Climber",
+          false,
+          50,
+          10,
+          "",
+          new Set([
             ExerciseCategories.Legs,
             ExerciseCategories.Butt,
             ExerciseCategories.Shoulder,
@@ -39,39 +39,33 @@ const moduleExercises: Module<ExercisesState, any> = {
             ExerciseCategories.Abdos,
             ExerciseCategories.Cardio
           ])
-        }
+        )
       ],
       [
         2,
-        {
-          id: 2,
-          img: "002_push_up",
-          name: "Push Up",
-          isSymmetrical: false,
-          defaultSecondsDuration: 50,
-          defaultSecondsBreak: 10,
-          tips: "",
-          categories: new Set([
-            ExerciseCategories.Arms,
-            ExerciseCategories.Shoulder
-          ])
-        }
+        new Exercise(
+          2,
+          "002_push_up",
+          "Push Up",
+          false,
+          50,
+          10,
+          "",
+          new Set([ExerciseCategories.Arms, ExerciseCategories.Shoulder])
+        )
       ],
       [
         3,
-        {
-          id: 3,
-          img: "003_quadriceps_extension",
-          name: "Quadriceps Extension",
-          isSymmetrical: true,
-          defaultSecondsDuration: 45,
-          defaultSecondsBreak: 5,
-          tips: "",
-          categories: new Set([
-            ExerciseCategories.Legs,
-            ExerciseCategories.Stretch
-          ])
-        }
+        new Exercise(
+          3,
+          "003_quadriceps_extension",
+          "Quadriceps Extension",
+          true,
+          45,
+          5,
+          "",
+          new Set([ExerciseCategories.Legs, ExerciseCategories.Stretch])
+        )
       ]
     ])
   }),

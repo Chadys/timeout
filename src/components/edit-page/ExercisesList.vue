@@ -20,6 +20,10 @@
     <v-list two-line>
       <template v-for="(exercise, index) in filteredExercises">
         <v-list-item :key="exercise.id" @click="addExercise(exercise.id)">
+          <v-list-item-avatar rounded>
+            <v-img :src="exercise.imgSideUrl" />
+          </v-list-item-avatar>
+
           <v-list-item-content>
             <v-list-item-title v-text="exercise.name"></v-list-item-title>
             <v-list-item-subtitle>

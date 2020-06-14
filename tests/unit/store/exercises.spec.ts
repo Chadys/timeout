@@ -13,19 +13,7 @@ describe("exercisesCategoriesFilter", () => {
     categories: ExerciseCategories[]
   ): [number, Exercise] {
     const categoriesSet = new Set(categories);
-    return [
-      id,
-      {
-        id,
-        img: "",
-        name: "",
-        isSymmetrical: false,
-        defaultSecondsDuration: 0,
-        defaultSecondsBreak: 0,
-        tips: "",
-        categories: categoriesSet
-      }
-    ];
+    return [id, new Exercise(id, "", "", false, 0, 0, "", categoriesSet)];
   }
 
   const state: ExercisesState = {
