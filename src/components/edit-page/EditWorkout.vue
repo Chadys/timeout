@@ -41,6 +41,11 @@
           <ExercisesList @add-exercise="addExercise($event)" />
         </v-col>
       </v-row>
+      <v-row justify="end">
+        <ButtonDelete class="mr-12 pa-6" :workoutId="workoutId" />
+        <ButtonDownload class="mr-12 pa-6" />
+        <ButtonRun class="mr-12 pa-6" />
+      </v-row>
     </template>
   </v-container>
 </template>
@@ -52,12 +57,16 @@ import { Prop } from "vue-property-decorator";
 
 import { OPERATIONS, Workout } from "@/store/modules/workouts/workouts.type";
 import ExercisesList from "@/components/edit-page/ExercisesList.vue";
+import ButtonDelete from "@/components/edit-page/ButtonDelete.vue";
+import ButtonDownload from "@/components/edit-page/ButtonDownload.vue";
+import ButtonRun from "@/components/edit-page/ButtonRun.vue";
 
 @Component({
   name: "EditWorkout",
-  components: { ExercisesList }
+  components: { ButtonRun, ButtonDownload, ButtonDelete, ExercisesList }
 })
 export default class WorkoutsList extends Vue {
+  // TODO better mobile presentation in template
   @Prop(Number) readonly workoutId!: number;
 
   get workout(): Workout {

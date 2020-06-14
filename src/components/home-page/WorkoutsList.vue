@@ -7,14 +7,20 @@
         :key="workout.id"
       >
         <v-list-item-content>
-          <v-list-item-title>{{ workout.title }}</v-list-item-title>
+          <v-list-item-title>{{
+            workout.title || `Unknown Workout ${workout.id}`
+          }}</v-list-item-title>
           <v-list-item-subtitle>{{
             workout.timeInSeconds | humanizeSmallDuration
           }}</v-list-item-subtitle>
         </v-list-item-content>
 
         <v-list-item-action class="d-inline">
-          <v-btn icon class="mr-2">
+          <v-btn
+            icon
+            class="mr-2"
+            :to="{ name: 'EditWorkout', params: { workoutId: workout.id } }"
+          >
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
           <v-btn icon class="mr-2">

@@ -36,6 +36,9 @@ const moduleWorkouts: Module<WorkoutsState, any> = {
       if (workout != null) {
         workout.addExercise(payload.selectedExercise);
       }
+    },
+    [OPERATIONS.DELETE_WORKOUT](state, payload: { workoutId: number }) {
+      state.workoutsMap.delete(payload.workoutId);
     }
   },
   actions: {
