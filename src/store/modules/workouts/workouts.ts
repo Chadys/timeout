@@ -2,6 +2,7 @@ import { Module } from "vuex";
 
 import {
   OPERATIONS,
+  SelectedExercise,
   Workout,
   WorkoutsState
 } from "@/store/modules/workouts/workouts.type";
@@ -26,12 +27,38 @@ const moduleWorkouts: Module<WorkoutsState, any> = {
       if (workout != null) {
         workout.title = payload.newTitle;
       }
+    },
+    [OPERATIONS.ADD_EXERCISE](
+      state,
+      payload: { workoutId: number; selectedExercise: SelectedExercise }
+    ) {
+      const workout = state.workoutsMap.get(payload.workoutId);
+      if (workout != null) {
+        workout.addExercise(payload.selectedExercise);
+      }
     }
   },
   actions: {
     [OPERATIONS.NEW_WORKOUT]({ state, commit }): number {
       commit(OPERATIONS.NEW_WORKOUT);
       return state.lastId;
+    },
+    [OPERATIONS.ADD_EXERCISE](
+      { commit, rootState },
+      payload: { workoutId: number; exerciseId: number }
+    ) {
+      const exercise = rootState.exercises.exercisesMap.get(payload.exerciseId);
+      if (exercise != null) {
+        const selectedExercise = {
+          exerciseId: payload.exerciseId,
+          secondsDuration: exercise.defaultSecondsDuration,
+          secondsBreak: exercise.defaultSecondsBreak
+        };
+        commit(OPERATIONS.ADD_EXERCISE, {
+          workoutId: payload.workoutId,
+          selectedExercise
+        });
+      }
     }
   }
 };

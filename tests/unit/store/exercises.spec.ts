@@ -17,8 +17,7 @@ describe("exercisesCategoriesFilter", () => {
       id,
       {
         id,
-        imgSide: "",
-        imgFront: "",
+        img: "",
         name: "",
         isSymmetrical: false,
         defaultSecondsDuration: 0,
@@ -39,7 +38,7 @@ describe("exercisesCategoriesFilter", () => {
         ExerciseCategories.Legs,
         ExerciseCategories.Cardio
       ]),
-      createDummyExercise(3, [ExerciseCategories.Abdo])
+      createDummyExercise(3, [ExerciseCategories.Abdos])
     ])
   };
 

@@ -16,17 +16,17 @@
     <v-row class="text-center" v-if="workout == null">
       <v-col>
         <h2 class="display-2 font-weight-bold">
-          Invalid Workout
+          Workout not found
         </h2>
       </v-col>
     </v-row>
 
     <template v-else>
-      <v-row align="center" justify="space-around">
-        <v-col cols="3" class="text-center">
+      <v-row align="center">
+        <v-col cols="4" class="text-center">
           <h3>Available exercises</h3>
         </v-col>
-        <v-col cols="4">
+        <v-col cols="4" offset="2">
           <v-text-field
             color="default"
             class="text-h3"
@@ -34,6 +34,11 @@
             :value="workout.title"
             @input="updateTitle($event)"
           ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="4">
+          <ExercisesList @add-exercise="addExercise($event)" />
         </v-col>
       </v-row>
     </template>
@@ -46,9 +51,11 @@ import Vue from "vue";
 import { Prop } from "vue-property-decorator";
 
 import { OPERATIONS, Workout } from "@/store/modules/workouts/workouts.type";
+import ExercisesList from "@/components/edit-page/ExercisesList.vue";
 
 @Component({
-  name: "EditWorkout"
+  name: "EditWorkout",
+  components: { ExercisesList }
 })
 export default class WorkoutsList extends Vue {
   @Prop(Number) readonly workoutId!: number;
@@ -61,6 +68,13 @@ export default class WorkoutsList extends Vue {
     this.$store.commit(OPERATIONS.EDIT_WORKOUT_TITLE, {
       workoutId: this.workoutId,
       newTitle
+    });
+  }
+
+  addExercise(exerciseId: number) {
+    this.$store.dispatch(OPERATIONS.ADD_EXERCISE, {
+      workoutId: this.workoutId,
+      exerciseId
     });
   }
 }

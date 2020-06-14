@@ -1,15 +1,19 @@
 export enum ExerciseCategories {
-  Cardio,
-  Arms,
-  Legs,
-  Abdo,
-  Stretch
+  Cardio = "Cardio",
+  Stretch = "Stretch",
+  Stabilisation = "Stabilisation",
+
+  Arms = "Arms",
+  Shoulder = "Shoulder",
+  Abdos = "Abdos",
+  Back = "Back",
+  Butt = "Butt",
+  Legs = "Legs"
 }
 
 export interface Exercise {
   id: number;
-  imgSide: string;
-  imgFront: string;
+  img: string;
   name: string;
   isSymmetrical: boolean;
   defaultSecondsDuration: number;
