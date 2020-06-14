@@ -41,7 +41,7 @@
           <ExercisesList @add-exercise="addExercise($event)" />
         </v-col>
         <v-col cols="4" offset="2">
-          <WorkoutProgram :workout="workout" />
+          <WorkoutProgram :workoutId="workoutId" />
         </v-col>
       </v-row>
       <v-row justify="end">
@@ -56,7 +56,7 @@
 <script lang="ts">
 import Component from "vue-class-component";
 import Vue from "vue";
-import { Prop } from "vue-property-decorator";
+import { Prop, Watch } from "vue-property-decorator";
 
 import { OPERATIONS, Workout } from "@/store/modules/workouts/workouts.type";
 import ExercisesList from "@/components/edit-page/ExercisesList.vue";
@@ -77,10 +77,20 @@ import ButtonRun from "@/components/edit-page/ButtonRun.vue";
 })
 export default class WorkoutsList extends Vue {
   // TODO better mobile presentation in template
+
   @Prop(Number) readonly workoutId!: number;
 
-  get workout(): Workout {
-    return this.$store.state.workouts.workoutsMap.get(this.workoutId);
+  // get workout(): Workout {
+  //   return this.$store.state.workouts.workoutsMap.get(this.workoutId);
+  // }
+  // workaround because component not updating correctly since Map not reactive,
+  // see: https://github.com/vuejs/vue/issues/2410
+  workout: Workout | null = null;
+
+  @Watch("workoutId", { immediate: true })
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onWorkoutChanged(val: number, _oldVal: number) {
+    this.workout = this.$store.state.workouts.workoutsMap.get(val);
   }
 
   updateTitle(newTitle: string): void {

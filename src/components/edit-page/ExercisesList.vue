@@ -25,7 +25,7 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title v-text="exercise.name"></v-list-item-title>
+            <v-list-item-title>{{ exercise.name }}</v-list-item-title>
             <v-list-item-subtitle>
               {{ Array.from(exercise.categories).toString() }}
             </v-list-item-subtitle>
@@ -43,7 +43,7 @@
           </v-list-item-action>
         </v-list-item>
 
-        <!--use negative index as key to prevent collision with id key of chip-->
+        <!--use negative index as key to prevent collision with id key of v-list-item-->
         <v-divider
           v-if="index + 1 < filteredExercises.length"
           :key="-index"
