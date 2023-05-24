@@ -75,11 +75,13 @@ export default class EditExerciseDialog extends Vue {
 
   dialog = false;
   numberRules = [
-    (v: string | number | null) => /^\d+$/.test(v) || "Number expected"
+    (v: string | number | null) =>
+      (v != null && /^\d+$/.test(v.toString())) || "Number expected"
   ];
 
   save(): void {
-    if (this.$refs.form.validate()) {
+    const form = this.$refs.form as Vue & { validate: () => boolean };
+    if (form.validate()) {
       this.editExercise(
         Number(this.selectedExercise.secondsDuration),
         Number(this.selectedExercise.secondsBreak)

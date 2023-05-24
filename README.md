@@ -3,6 +3,8 @@
 ## Presentation
 ![Demo Timeout](docs/demo.gif)
 
+See [live demo](https://chadys.github.io/timeout/#/)
+
 The end goal is to have a lightweight application, only running on the browser
 to create and launch customs workouts. A workout is composed of several small physical exercise 
 that you can do without any equipment.
