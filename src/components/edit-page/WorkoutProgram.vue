@@ -1,8 +1,8 @@
 <template>
   <v-list two-line>
     <template v-for="(selectedExercise, index) in filledProgram">
-      <v-list-item :key="index">
-        <v-list-item-icon>
+      <v-list-item :key="index" :custom="index">
+        <v-list-item-icon @click="removeExercise(index)">
           <v-btn icon>
             <v-icon color="error">mdi-close</v-icon>
           </v-btn>
@@ -18,14 +18,27 @@
         </v-list-item-content>
 
         <v-list-item-action>
-          <!--          <v-icon>-->
-          <!--            mdi-playlist-plus-->
-          <!--          </v-icon>-->
+          <v-list-item-action-text>
+            {{ selectedExercise.secondsDuration | humanizeSmallDuration }}
+          </v-list-item-action-text>
+          <EditExerciseDialog
+            :selectedExercise="{ ...selectedExercise }"
+            @edit-exercise="editExercise(index, ...arguments)"
+          />
         </v-list-item-action>
       </v-list-item>
 
       <!--use negative and skip zero as key to prevent collision with key of v-list-item-->
-      <v-divider :key="-index - 1" />
+      <div
+        v-if="index + 1 < filledProgram.length"
+        :key="-index - 1"
+        class="d-flex align-center"
+      >
+        <div class="mr-2 text-caption">
+          {{ selectedExercise.secondsBreak | humanizeSmallDuration }} break
+        </div>
+        <v-divider></v-divider>
+      </div>
     </template>
   </v-list>
 </template>
@@ -33,22 +46,22 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Prop, Watch } from "vue-property-decorator";
+import { Emit, Prop, Watch } from "vue-property-decorator";
 
 import {
   SelectedExercise,
   Workout
 } from "@/store/modules/workouts/workouts.type";
-import { Exercise } from "@/store/modules/exercises/exercises.type";
-
-interface FilledSelectedExercise {
-  exercise: Exercise;
-  secondsDuration: number;
-  secondsBreak: number;
-}
+import { FilledSelectedExercise } from "@/store/modules/exercises/exercises.type";
+import humanizeSmallDuration from "@/filters/humanizeSmallDuration";
+import EditExerciseDialog from "@/components/edit-page/EditExerciseDialog.vue";
 
 @Component({
-  name: "WorkoutProgram"
+  name: "WorkoutProgram",
+  components: { EditExerciseDialog },
+  filters: {
+    humanizeSmallDuration
+  }
 })
 export default class WorkoutProgram extends Vue {
   @Prop(Number) readonly workoutId!: number;
@@ -77,6 +90,22 @@ export default class WorkoutProgram extends Vue {
       };
     });
   }
+
+  @Emit("remove-exercise")
+  // Emit decorator already emit function argument, no need to return anything or use argument
+  // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+  removeExercise(_exerciseIndex: number): void {}
+
+  @Emit("edit-exercise")
+  editExercise(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _exerciseIndex: number,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _secondsDuration: number,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _secondsBreak: number
+    // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+  ): void {}
 }
 </script>
 

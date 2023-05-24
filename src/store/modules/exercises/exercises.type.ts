@@ -54,3 +54,9 @@ export class Exercise {
 export interface ExercisesState {
   exercisesMap: Map<number, Exercise>; //map's keys should be object ids
 }
+
+export interface FilledSelectedExercise {
+  exercise: Exercise;
+  secondsDuration: number;
+  secondsBreak: number;
+}

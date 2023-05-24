@@ -37,6 +37,33 @@ const moduleWorkouts: Module<WorkoutsState, any> = {
         workout.addExercise(payload.selectedExercise);
       }
     },
+    [OPERATIONS.REMOVE_EXERCISE](
+      state,
+      payload: { workoutId: number; exerciseIndex: number }
+    ) {
+      const workout = state.workoutsMap.get(payload.workoutId);
+      if (workout != null) {
+        workout.removeExercise(payload.exerciseIndex);
+      }
+    },
+    [OPERATIONS.EDIT_EXERCISE](
+      state,
+      payload: {
+        workoutId: number;
+        exerciseIndex: number;
+        secondsDuration: number;
+        secondsBreak: number;
+      }
+    ) {
+      const workout = state.workoutsMap.get(payload.workoutId);
+      if (workout != null) {
+        workout.editExercise(
+          payload.exerciseIndex,
+          payload.secondsDuration,
+          payload.secondsBreak
+        );
+      }
+    },
     [OPERATIONS.DELETE_WORKOUT](state, payload: { workoutId: number }) {
       state.workoutsMap.delete(payload.workoutId);
     }

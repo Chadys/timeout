@@ -43,10 +43,10 @@
           </v-list-item-action>
         </v-list-item>
 
-        <!--use negative index as key to prevent collision with id key of v-list-item-->
+        <!--use negative and skip zero as key to prevent collision with key of v-list-item-->
         <v-divider
           v-if="index + 1 < filteredExercises.length"
-          :key="-index"
+          :key="-index - 1"
         ></v-divider>
       </template>
     </v-list>
@@ -70,7 +70,7 @@ import { Emit } from "vue-property-decorator";
     humanizeSmallDuration
   }
 })
-export default class WorkoutsList extends Vue {
+export default class ExercisesList extends Vue {
   exerciseCategories = ExerciseCategories;
   selectedExerciseCategories: ExerciseCategories[] = [];
 

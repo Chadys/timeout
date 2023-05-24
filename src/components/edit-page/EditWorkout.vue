@@ -41,7 +41,11 @@
           <ExercisesList @add-exercise="addExercise($event)" />
         </v-col>
         <v-col cols="4" offset="2">
-          <WorkoutProgram :workoutId="workoutId" />
+          <WorkoutProgram
+            :workoutId="workoutId"
+            @remove-exercise="removeExercise($event)"
+            @edit-exercise="editExercise(...arguments)"
+          />
         </v-col>
       </v-row>
       <v-row justify="end">
@@ -75,7 +79,7 @@ import ButtonRun from "@/components/edit-page/ButtonRun.vue";
     WorkoutProgram
   }
 })
-export default class WorkoutsList extends Vue {
+export default class EditWorkout extends Vue {
   // TODO better mobile presentation in template
 
   @Prop(Number) readonly workoutId!: number;
@@ -104,6 +108,26 @@ export default class WorkoutsList extends Vue {
     this.$store.dispatch(OPERATIONS.ADD_EXERCISE, {
       workoutId: this.workoutId,
       exerciseId
+    });
+  }
+
+  removeExercise(exerciseIndex: number) {
+    this.$store.commit(OPERATIONS.REMOVE_EXERCISE, {
+      workoutId: this.workoutId,
+      exerciseIndex
+    });
+  }
+
+  editExercise(
+    exerciseIndex: number,
+    secondsDuration: number,
+    secondsBreak: number
+  ) {
+    this.$store.commit(OPERATIONS.EDIT_EXERCISE, {
+      workoutId: this.workoutId,
+      exerciseIndex,
+      secondsDuration,
+      secondsBreak
     });
   }
 }

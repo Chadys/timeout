@@ -2,7 +2,9 @@ export enum OPERATIONS {
   NEW_WORKOUT = "NEW_WORKOUT",
   DELETE_WORKOUT = "DELETE_WORKOUT",
   EDIT_WORKOUT_TITLE = "EDIT_WORKOUT_TITLE",
-  ADD_EXERCISE = "ADD_EXERCISE"
+  ADD_EXERCISE = "ADD_EXERCISE",
+  REMOVE_EXERCISE = "REMOVE_EXERCISE",
+  EDIT_EXERCISE = "EDIT_EXERCISE"
 }
 
 export interface SelectedExercise {
@@ -27,7 +29,11 @@ export class Workout {
     this.timeInSeconds -= exercise.secondsDuration + exercise.secondsBreak;
   }
 
-  editExercise(index: number, secondsDuration?: number, secondsBreak?: number) {
+  editExercise(
+    index: number,
+    secondsDuration: number | null = null,
+    secondsBreak: number | null = null
+  ) {
     const exercise = this.program[index];
     if (secondsDuration != null) {
       this.timeInSeconds =
