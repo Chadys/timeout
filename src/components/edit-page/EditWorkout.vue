@@ -45,6 +45,7 @@
             :workoutId="workoutId"
             @remove-exercise="removeExercise($event)"
             @edit-exercise="editExercise(...arguments)"
+            @move-exercise="moveExercise(...arguments)"
           />
         </v-col>
       </v-row>
@@ -128,6 +129,14 @@ export default class EditWorkout extends Vue {
       exerciseIndex,
       secondsDuration,
       secondsBreak
+    });
+  }
+
+  moveExercise(oldExerciseIndex: number, newExerciseIndex: number) {
+    this.$store.commit(OPERATIONS.MOVE_EXERCISE, {
+      workoutId: this.workoutId,
+      oldExerciseIndex,
+      newExerciseIndex
     });
   }
 }

@@ -64,6 +64,22 @@ const moduleWorkouts: Module<WorkoutsState, any> = {
         );
       }
     },
+    [OPERATIONS.MOVE_EXERCISE](
+      state,
+      payload: {
+        workoutId: number;
+        oldExerciseIndex: number;
+        newExerciseIndex: number;
+      }
+    ) {
+      const workout = state.workoutsMap.get(payload.workoutId);
+      if (workout != null) {
+        workout.moveExercise(
+          payload.oldExerciseIndex,
+          payload.newExerciseIndex
+        );
+      }
+    },
     [OPERATIONS.DELETE_WORKOUT](state, payload: { workoutId: number }) {
       state.workoutsMap.delete(payload.workoutId);
     }

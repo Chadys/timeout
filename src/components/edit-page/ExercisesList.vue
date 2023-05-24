@@ -19,35 +19,34 @@
 
     <v-list two-line>
       <template v-for="(exercise, index) in filteredExercises">
-        <v-list-item :key="exercise.id" @click="addExercise(exercise.id)">
-          <v-list-item-avatar rounded>
-            <v-img :src="exercise.imgSideUrl" />
-          </v-list-item-avatar>
+        <div :key="exercise.id">
+          <v-list-item @click="addExercise(exercise.id)">
+            <v-list-item-avatar rounded>
+              <v-img :src="exercise.imgSideUrl" />
+            </v-list-item-avatar>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ exercise.name }}</v-list-item-title>
-            <v-list-item-subtitle>
-              {{ Array.from(exercise.categories).toString() }}
-            </v-list-item-subtitle>
-          </v-list-item-content>
+            <v-list-item-content>
+              <v-list-item-title>{{ exercise.name }}</v-list-item-title>
+              <v-list-item-subtitle>
+                {{ Array.from(exercise.categories).toString() }}
+              </v-list-item-subtitle>
+            </v-list-item-content>
 
-          <v-list-item-action>
-            <v-list-item-action-text>{{
-              (exercise.defaultSecondsDuration + exercise.defaultSecondsBreak)
-                | humanizeSmallDuration
-            }}</v-list-item-action-text>
+            <v-list-item-action>
+              <v-list-item-action-text>{{
+                (exercise.defaultSecondsDuration +
+                  exercise.defaultSecondsBreak)
+                  | humanizeSmallDuration
+              }}</v-list-item-action-text>
 
-            <v-icon>
-              mdi-playlist-plus
-            </v-icon>
-          </v-list-item-action>
-        </v-list-item>
+              <v-icon>
+                mdi-playlist-plus
+              </v-icon>
+            </v-list-item-action>
+          </v-list-item>
 
-        <!--use negative and skip zero as key to prevent collision with key of v-list-item-->
-        <v-divider
-          v-if="index + 1 < filteredExercises.length"
-          :key="-index - 1"
-        ></v-divider>
+          <v-divider v-if="index + 1 < filteredExercises.length"></v-divider>
+        </div>
       </template>
     </v-list>
   </div>

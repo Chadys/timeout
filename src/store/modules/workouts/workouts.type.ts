@@ -4,7 +4,8 @@ export enum OPERATIONS {
   EDIT_WORKOUT_TITLE = "EDIT_WORKOUT_TITLE",
   ADD_EXERCISE = "ADD_EXERCISE",
   REMOVE_EXERCISE = "REMOVE_EXERCISE",
-  EDIT_EXERCISE = "EDIT_EXERCISE"
+  EDIT_EXERCISE = "EDIT_EXERCISE",
+  MOVE_EXERCISE = "MOVE_EXERCISE"
 }
 
 export interface SelectedExercise {
@@ -47,8 +48,8 @@ export class Workout {
     }
   }
 
-  moveExercise(index: number, newIndex: number) {
-    this.program.splice(newIndex, 0, this.program.splice(index, 1)[0]);
+  moveExercise(oldIndex: number, newIndex: number) {
+    this.program.splice(newIndex, 0, this.program.splice(oldIndex, 1)[0]);
   }
 }
 

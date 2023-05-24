@@ -1,45 +1,48 @@
 <template>
   <v-list two-line>
-    <template v-for="(selectedExercise, index) in filledProgram">
-      <v-list-item :key="index" :custom="index">
-        <v-list-item-icon @click="removeExercise(index)">
-          <v-btn icon>
-            <v-icon color="error">mdi-close</v-icon>
-          </v-btn>
-        </v-list-item-icon>
+    <draggable :value="filledProgram" @end="onDragEnd">
+      <template v-for="(selectedExercise, index) in filledProgram">
+        <div :key="index" class="drag-pointer">
+          <v-list-item>
+            <v-list-item-icon @click="removeExercise(index)">
+              <v-btn icon>
+                <v-icon color="error">mdi-close</v-icon>
+              </v-btn>
+            </v-list-item-icon>
 
-        <v-list-item-content>
-          <v-list-item-title>{{
-            selectedExercise.exercise.name
-          }}</v-list-item-title>
-          <v-list-item-subtitle>
-            {{ Array.from(selectedExercise.exercise.categories).toString() }}
-          </v-list-item-subtitle>
-        </v-list-item-content>
+            <v-list-item-content>
+              <v-list-item-title>{{
+                selectedExercise.exercise.name
+              }}</v-list-item-title>
+              <v-list-item-subtitle>
+                {{
+                  Array.from(selectedExercise.exercise.categories).toString()
+                }}
+              </v-list-item-subtitle>
+            </v-list-item-content>
 
-        <v-list-item-action>
-          <v-list-item-action-text>
-            {{ selectedExercise.secondsDuration | humanizeSmallDuration }}
-          </v-list-item-action-text>
-          <EditExerciseDialog
-            :selectedExercise="{ ...selectedExercise }"
-            @edit-exercise="editExercise(index, ...arguments)"
-          />
-        </v-list-item-action>
-      </v-list-item>
-
-      <!--use negative and skip zero as key to prevent collision with key of v-list-item-->
-      <div
-        v-if="index + 1 < filledProgram.length"
-        :key="-index - 1"
-        class="d-flex align-center"
-      >
-        <div class="mr-2 text-caption">
-          {{ selectedExercise.secondsBreak | humanizeSmallDuration }} break
+            <v-list-item-action>
+              <v-list-item-action-text>
+                {{ selectedExercise.secondsDuration | humanizeSmallDuration }}
+              </v-list-item-action-text>
+              <EditExerciseDialog
+                :selectedExercise="{ ...selectedExercise }"
+                @edit-exercise="editExercise(index, ...arguments)"
+              />
+            </v-list-item-action>
+          </v-list-item>
+          <div
+            v-if="index + 1 < filledProgram.length"
+            class="d-flex align-center"
+          >
+            <div class="mr-2 text-caption">
+              {{ selectedExercise.secondsBreak | humanizeSmallDuration }} break
+            </div>
+            <v-divider></v-divider>
+          </div>
         </div>
-        <v-divider></v-divider>
-      </div>
-    </template>
+      </template>
+    </draggable>
   </v-list>
 </template>
 
@@ -55,10 +58,11 @@ import {
 import { FilledSelectedExercise } from "@/store/modules/exercises/exercises.type";
 import humanizeSmallDuration from "@/filters/humanizeSmallDuration";
 import EditExerciseDialog from "@/components/edit-page/EditExerciseDialog.vue";
+import draggable from "vuedraggable";
 
 @Component({
   name: "WorkoutProgram",
-  components: { EditExerciseDialog },
+  components: { EditExerciseDialog, draggable },
   filters: {
     humanizeSmallDuration
   }
@@ -106,7 +110,23 @@ export default class WorkoutProgram extends Vue {
     _secondsBreak: number
     // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
   ): void {}
+
+  @Emit("move-exercise")
+  // eslint-disable-next-line @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars
+  moveExercise(_oldExerciseIndex: number, _newExerciseIndex: number): void {}
+
+  // sortable has no type for DragEndEvent, should probably define one
+  onDragEnd(endDragEvent: { oldIndex: number; newIndex: number }) {
+    this.moveExercise(endDragEvent.oldIndex, endDragEvent.newIndex);
+  }
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.drag-pointer {
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
+}
+</style>
